@@ -1029,6 +1029,7 @@ var map_PersistentVolumeSource = map[string]string{
 	"flocker":              "Flocker represents a Flocker volume attached to a kubelet's host machine and exposed to the pod for its usage. This depends on the Flocker control service being running",
 	"flexVolume":           "FlexVolume represents a generic volume resource that is provisioned/attached using a exec based plugin. This is an alpha feature and may change in future.",
 	"azureFile":            "AzureFile represents an Azure File Service mount on the host and bind mount to the pod.",
+	"rexray":               "RexRay represents a volume that will be mounted to the host.",
 }
 
 func (PersistentVolumeSource) SwaggerDoc() map[string]string {
@@ -1380,6 +1381,14 @@ func (ResourceRequirements) SwaggerDoc() map[string]string {
 	return map_ResourceRequirements
 }
 
+var map_RexRayVolumeSource = map[string]string{
+	"": "Holds the information that may be persisted by kubernetes",
+}
+
+func (RexRayVolumeSource) SwaggerDoc() map[string]string {
+	return map_RexRayVolumeSource
+}
+
 var map_SELinuxOptions = map[string]string{
 	"":      "SELinuxOptions are the labels to be applied to the container",
 	"user":  "User is a SELinux user label that applies to the container.",
@@ -1593,6 +1602,7 @@ var map_VolumeSource = map[string]string{
 	"fc":          "FC represents a Fibre Channel resource that is attached to a kubelet's host machine and then exposed to the pod.",
 	"azureFile":   "AzureFile represents an Azure File Service mount on the host and bind mount to the pod.",
 	"configMap":   "ConfigMap represents a configMap that should populate this volume",
+	"rexray":      "RexRay represents a rexray volume that should populate this volume",
 }
 
 func (VolumeSource) SwaggerDoc() map[string]string {

@@ -2042,6 +2042,15 @@ func autoConvert_api_PersistentVolumeSource_To_v1_PersistentVolumeSource(in *api
 	} else {
 		out.AzureFile = nil
 	}
+	// unable to generate simple pointer conversion for api.RexRayVolumeSource -> v1.RexRayVolumeSource
+	if in.RexRay != nil {
+		out.RexRay = new(RexRayVolumeSource)
+		if err := Convert_api_RexRayVolumeSource_To_v1_RexRayVolumeSource(in.RexRay, out.RexRay, s); err != nil {
+			return err
+		}
+	} else {
+		out.RexRay = nil
+	}
 	return nil
 }
 
@@ -2751,6 +2760,21 @@ func Convert_api_ResourceRequirements_To_v1_ResourceRequirements(in *api.Resourc
 	return autoConvert_api_ResourceRequirements_To_v1_ResourceRequirements(in, out, s)
 }
 
+func autoConvert_api_RexRayVolumeSource_To_v1_RexRayVolumeSource(in *api.RexRayVolumeSource, out *RexRayVolumeSource, s conversion.Scope) error {
+	if defaulting, found := s.DefaultingInterface(reflect.TypeOf(*in)); found {
+		defaulting.(func(*api.RexRayVolumeSource))(in)
+	}
+	out.VolumeName = in.VolumeName
+	out.VolumeID = in.VolumeID
+	out.Module = in.Module
+	out.StorageDriver = in.StorageDriver
+	return nil
+}
+
+func Convert_api_RexRayVolumeSource_To_v1_RexRayVolumeSource(in *api.RexRayVolumeSource, out *RexRayVolumeSource, s conversion.Scope) error {
+	return autoConvert_api_RexRayVolumeSource_To_v1_RexRayVolumeSource(in, out, s)
+}
+
 func autoConvert_api_SELinuxOptions_To_v1_SELinuxOptions(in *api.SELinuxOptions, out *SELinuxOptions, s conversion.Scope) error {
 	if defaulting, found := s.DefaultingInterface(reflect.TypeOf(*in)); found {
 		defaulting.(func(*api.SELinuxOptions))(in)
@@ -3311,6 +3335,15 @@ func autoConvert_api_VolumeSource_To_v1_VolumeSource(in *api.VolumeSource, out *
 		}
 	} else {
 		out.ConfigMap = nil
+	}
+	// unable to generate simple pointer conversion for api.RexRayVolumeSource -> v1.RexRayVolumeSource
+	if in.RexRay != nil {
+		out.RexRay = new(RexRayVolumeSource)
+		if err := Convert_api_RexRayVolumeSource_To_v1_RexRayVolumeSource(in.RexRay, out.RexRay, s); err != nil {
+			return err
+		}
+	} else {
+		out.RexRay = nil
 	}
 	return nil
 }
@@ -5287,6 +5320,15 @@ func autoConvert_v1_PersistentVolumeSource_To_api_PersistentVolumeSource(in *Per
 	} else {
 		out.AzureFile = nil
 	}
+	// unable to generate simple pointer conversion for v1.RexRayVolumeSource -> api.RexRayVolumeSource
+	if in.RexRay != nil {
+		out.RexRay = new(api.RexRayVolumeSource)
+		if err := Convert_v1_RexRayVolumeSource_To_api_RexRayVolumeSource(in.RexRay, out.RexRay, s); err != nil {
+			return err
+		}
+	} else {
+		out.RexRay = nil
+	}
 	return nil
 }
 
@@ -5944,6 +5986,21 @@ func Convert_v1_ResourceRequirements_To_api_ResourceRequirements(in *ResourceReq
 	return autoConvert_v1_ResourceRequirements_To_api_ResourceRequirements(in, out, s)
 }
 
+func autoConvert_v1_RexRayVolumeSource_To_api_RexRayVolumeSource(in *RexRayVolumeSource, out *api.RexRayVolumeSource, s conversion.Scope) error {
+	if defaulting, found := s.DefaultingInterface(reflect.TypeOf(*in)); found {
+		defaulting.(func(*RexRayVolumeSource))(in)
+	}
+	out.VolumeName = in.VolumeName
+	out.VolumeID = in.VolumeID
+	out.Module = in.Module
+	out.StorageDriver = in.StorageDriver
+	return nil
+}
+
+func Convert_v1_RexRayVolumeSource_To_api_RexRayVolumeSource(in *RexRayVolumeSource, out *api.RexRayVolumeSource, s conversion.Scope) error {
+	return autoConvert_v1_RexRayVolumeSource_To_api_RexRayVolumeSource(in, out, s)
+}
+
 func autoConvert_v1_SELinuxOptions_To_api_SELinuxOptions(in *SELinuxOptions, out *api.SELinuxOptions, s conversion.Scope) error {
 	if defaulting, found := s.DefaultingInterface(reflect.TypeOf(*in)); found {
 		defaulting.(func(*SELinuxOptions))(in)
@@ -6506,6 +6563,15 @@ func autoConvert_v1_VolumeSource_To_api_VolumeSource(in *VolumeSource, out *api.
 	} else {
 		out.ConfigMap = nil
 	}
+	// unable to generate simple pointer conversion for v1.RexRayVolumeSource -> api.RexRayVolumeSource
+	if in.RexRay != nil {
+		out.RexRay = new(api.RexRayVolumeSource)
+		if err := Convert_v1_RexRayVolumeSource_To_api_RexRayVolumeSource(in.RexRay, out.RexRay, s); err != nil {
+			return err
+		}
+	} else {
+		out.RexRay = nil
+	}
 	return nil
 }
 
@@ -6626,6 +6692,7 @@ func init() {
 		autoConvert_api_ResourceQuotaStatus_To_v1_ResourceQuotaStatus,
 		autoConvert_api_ResourceQuota_To_v1_ResourceQuota,
 		autoConvert_api_ResourceRequirements_To_v1_ResourceRequirements,
+		autoConvert_api_RexRayVolumeSource_To_v1_RexRayVolumeSource,
 		autoConvert_api_SELinuxOptions_To_v1_SELinuxOptions,
 		autoConvert_api_SecretKeySelector_To_v1_SecretKeySelector,
 		autoConvert_api_SecretList_To_v1_SecretList,
@@ -6758,6 +6825,7 @@ func init() {
 		autoConvert_v1_ResourceQuotaStatus_To_api_ResourceQuotaStatus,
 		autoConvert_v1_ResourceQuota_To_api_ResourceQuota,
 		autoConvert_v1_ResourceRequirements_To_api_ResourceRequirements,
+		autoConvert_v1_RexRayVolumeSource_To_api_RexRayVolumeSource,
 		autoConvert_v1_SELinuxOptions_To_api_SELinuxOptions,
 		autoConvert_v1_SecretKeySelector_To_api_SecretKeySelector,
 		autoConvert_v1_SecretList_To_api_SecretList,

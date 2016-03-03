@@ -756,6 +756,14 @@ func deepCopy_v1_ResourceRequirements(in v1.ResourceRequirements, out *v1.Resour
 	return nil
 }
 
+func deepCopy_v1_RexRayVolumeSource(in v1.RexRayVolumeSource, out *v1.RexRayVolumeSource, c *conversion.Cloner) error {
+	out.VolumeName = in.VolumeName
+	out.VolumeID = in.VolumeID
+	out.Module = in.Module
+	out.StorageDriver = in.StorageDriver
+	return nil
+}
+
 func deepCopy_v1_SELinuxOptions(in v1.SELinuxOptions, out *v1.SELinuxOptions, c *conversion.Cloner) error {
 	out.User = in.User
 	out.Role = in.Role
@@ -996,6 +1004,14 @@ func deepCopy_v1_VolumeSource(in v1.VolumeSource, out *v1.VolumeSource, c *conve
 	} else {
 		out.ConfigMap = nil
 	}
+	if in.RexRay != nil {
+		out.RexRay = new(v1.RexRayVolumeSource)
+		if err := deepCopy_v1_RexRayVolumeSource(*in.RexRay, out.RexRay, c); err != nil {
+			return err
+		}
+	} else {
+		out.RexRay = nil
+	}
 	return nil
 }
 
@@ -1209,6 +1225,7 @@ func init() {
 		deepCopy_v1_Probe,
 		deepCopy_v1_RBDVolumeSource,
 		deepCopy_v1_ResourceRequirements,
+		deepCopy_v1_RexRayVolumeSource,
 		deepCopy_v1_SELinuxOptions,
 		deepCopy_v1_SecretKeySelector,
 		deepCopy_v1_SecretVolumeSource,

@@ -1536,6 +1536,14 @@ func deepCopy_v1_PersistentVolumeSource(in PersistentVolumeSource, out *Persiste
 	} else {
 		out.AzureFile = nil
 	}
+	if in.RexRay != nil {
+		out.RexRay = new(RexRayVolumeSource)
+		if err := deepCopy_v1_RexRayVolumeSource(*in.RexRay, out.RexRay, c); err != nil {
+			return err
+		}
+	} else {
+		out.RexRay = nil
+	}
 	return nil
 }
 
@@ -2151,6 +2159,14 @@ func deepCopy_v1_ResourceRequirements(in ResourceRequirements, out *ResourceRequ
 	return nil
 }
 
+func deepCopy_v1_RexRayVolumeSource(in RexRayVolumeSource, out *RexRayVolumeSource, c *conversion.Cloner) error {
+	out.VolumeName = in.VolumeName
+	out.VolumeID = in.VolumeID
+	out.Module = in.Module
+	out.StorageDriver = in.StorageDriver
+	return nil
+}
+
 func deepCopy_v1_SELinuxOptions(in SELinuxOptions, out *SELinuxOptions, c *conversion.Cloner) error {
 	out.User = in.User
 	out.Role = in.Role
@@ -2598,6 +2614,14 @@ func deepCopy_v1_VolumeSource(in VolumeSource, out *VolumeSource, c *conversion.
 	} else {
 		out.ConfigMap = nil
 	}
+	if in.RexRay != nil {
+		out.RexRay = new(RexRayVolumeSource)
+		if err := deepCopy_v1_RexRayVolumeSource(*in.RexRay, out.RexRay, c); err != nil {
+			return err
+		}
+	} else {
+		out.RexRay = nil
+	}
 	return nil
 }
 
@@ -2746,6 +2770,7 @@ func init() {
 		deepCopy_v1_ResourceQuotaSpec,
 		deepCopy_v1_ResourceQuotaStatus,
 		deepCopy_v1_ResourceRequirements,
+		deepCopy_v1_RexRayVolumeSource,
 		deepCopy_v1_SELinuxOptions,
 		deepCopy_v1_Secret,
 		deepCopy_v1_SecretKeySelector,
