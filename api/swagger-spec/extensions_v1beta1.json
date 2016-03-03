@@ -5562,6 +5562,10 @@
      "configMap": {
       "$ref": "v1.ConfigMapVolumeSource",
       "description": "ConfigMap represents a configMap that should populate this volume"
+     },
+     "rexray": {
+      "$ref": "v1.RexRayVolumeSource",
+      "description": "RexRay represents a rexray volume that should populate this volume"
      }
     }
    },
@@ -6058,6 +6062,30 @@
      "path": {
       "type": "string",
       "description": "The relative path of the file to map the key to. May not be an absolute path. May not contain the path element '..'. May not start with the string '..'."
+     }
+    }
+   },
+   "v1.RexRayVolumeSource": {
+    "id": "v1.RexRayVolumeSource",
+    "description": "Holds the information that may be persisted by kubernetes",
+    "required": [
+     "VolumeName",
+     "VolumeID",
+     "Module",
+     "StorageDriver"
+    ],
+    "properties": {
+     "VolumeName": {
+      "type": "string"
+     },
+     "VolumeID": {
+      "type": "string"
+     },
+     "Module": {
+      "type": "string"
+     },
+     "StorageDriver": {
+      "type": "string"
      }
     }
    },

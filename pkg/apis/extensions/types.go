@@ -879,6 +879,7 @@ var (
 	CephFS                FSType = "cephFS"
 	DownwardAPI           FSType = "downwardAPI"
 	FC                    FSType = "fc"
+	RexRay                FSType = "rexray"
 )
 
 // SELinuxContextStrategyOptions defines the strategy type and any options used to create the strategy.

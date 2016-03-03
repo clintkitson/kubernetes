@@ -957,6 +957,7 @@ var (
 	CephFS                FSType = "cephFS"
 	DownwardAPI           FSType = "downwardAPI"
 	FC                    FSType = "fc"
+	RexRay                FSType = "rexray"
 )
 
 // Host Port Range defines a range of host ports that will be enabled by a policy

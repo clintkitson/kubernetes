@@ -816,7 +816,8 @@ func validatePodSecurityPolicyVolumes(fldPath *field.Path, volumes []extensions.
 		string(extensions.Cinder),
 		string(extensions.CephFS),
 		string(extensions.DownwardAPI),
-		string(extensions.FC))
+		string(extensions.FC),
+		string(extensions.RexRay))
 	for _, v := range volumes {
 		if !allowed.Has(string(v)) {
 			allErrs = append(allErrs, field.NotSupported(fldPath.Child("volumes"), v, allowed.List()))

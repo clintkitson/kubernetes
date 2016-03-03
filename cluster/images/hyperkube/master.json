@@ -7,26 +7,35 @@
   "containers":[
     {
       "name": "controller-manager",
-      "image": "gcr.io/google_containers/hyperkube-ARCH:VERSION",
+      "image": "emccode/hyperkube-ARCH:VERSION",
       "command": [
               "/hyperkube",
               "controller-manager",
+              "--cloud-provider=rexray",
               "--master=127.0.0.1:8080",
               "--service-account-private-key-file=/srv/kubernetes/server.key",
               "--root-ca-file=/srv/kubernetes/ca.crt",
               "--min-resync-period=3m",
-              "--v=2"
+              "--v=4"
       ],
       "volumeMounts": [
         {
           "name": "data",
           "mountPath": "/srv/kubernetes"
+        },
+        {
+          "name": "dev",
+          "mountPath": "/dev"
+	},
+        {
+          "name": "rexray",
+          "mountPath": "/etc/rexray"
         }
       ]
     },
     {
       "name": "apiserver",
-      "image": "gcr.io/google_containers/hyperkube-ARCH:VERSION",
+      "image": "emccode/hyperkube-ARCH:VERSION",
       "command": [
               "/hyperkube",
               "apiserver",
@@ -41,7 +50,7 @@
               "--tls-private-key-file=/srv/kubernetes/server.key",
               "--token-auth-file=/srv/kubernetes/known_tokens.csv",
               "--allow-privileged=true",
-              "--v=4"
+              "--v=2"
       ],
       "volumeMounts": [
         {
@@ -52,7 +61,7 @@
     },
     {
       "name": "scheduler",
-      "image": "gcr.io/google_containers/hyperkube-ARCH:VERSION",
+      "image": "emccode/hyperkube-ARCH:VERSION",
       "command": [
               "/hyperkube",
               "scheduler",
@@ -62,7 +71,7 @@
     },
     {
       "name": "setup",
-      "image": "gcr.io/google_containers/hyperkube-ARCH:VERSION",
+      "image": "emccode/hyperkube-ARCH:VERSION",
       "command": [
               "/setup-files.sh",
               "IP:10.0.0.1,DNS:kubernetes,DNS:kubernetes.default,DNS:kubernetes.default.svc,DNS:kubernetes.default.svc.cluster.local"
@@ -79,6 +88,18 @@
     {
       "name": "data",
       "emptyDir": {}
+    },
+    {
+      "name": "dev",
+      "hostPath": {
+         "path": "/dev"
+      }
+    },
+    {
+      "name": "rexray",
+      "hostPath": {
+        "path": "/etc/rexray"
+      }
     }
   ]
  }

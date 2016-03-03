@@ -576,6 +576,8 @@ func describeVolumes(volumes []api.Volume, out io.Writer) {
 			printRBDVolumeSource(volume.VolumeSource.RBD, out)
 		case volume.VolumeSource.DownwardAPI != nil:
 			printDownwardAPIVolumeSource(volume.VolumeSource.DownwardAPI, out)
+		case volume.VolumeSource.RexRay != nil:
+			printRexRayVolumeSource(volume.VolumeSource.RexRay, out)
 		default:
 			fmt.Fprintf(out, "  <Volume Type Not Found>\n")
 		}
@@ -681,6 +683,15 @@ func printDownwardAPIVolumeSource(d *api.DownwardAPIVolumeSource, out io.Writer)
 	}
 }
 
+func printRexRayVolumeSource(rr *api.RexRayVolumeSource, out io.Writer) {
+	fmt.Fprintf(out, "    Type:\tRexRay (a Persistent Disk resource in REXRay)\n"+
+		"    VolumeName:\t%v\n"+
+		"    VolumeID:\t%v\n"+
+		"    Module:\t%v\n"+
+		"    StorageDriver:\t%v\n",
+		rr.VolumeName, rr.VolumeID, rr.Module, rr.StorageDriver)
+}
+
 type PersistentVolumeDescriber struct {
 	client.Interface
 }
@@ -725,6 +736,8 @@ func (d *PersistentVolumeDescriber) Describe(namespace, name string) (string, er
 			printGlusterfsVolumeSource(pv.Spec.Glusterfs, out)
 		case pv.Spec.RBD != nil:
 			printRBDVolumeSource(pv.Spec.RBD, out)
+		case pv.Spec.RexRay != nil:
+			printRexRayVolumeSource(pv.Spec.RexRay, out)
 		}
 
 		return nil

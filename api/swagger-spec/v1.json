@@ -15854,6 +15854,10 @@
       "$ref": "v1.AzureFileVolumeSource",
       "description": "AzureFile represents an Azure File Service mount on the host and bind mount to the pod."
      },
+     "rexray": {
+      "$ref": "v1.RexRayVolumeSource",
+      "description": "RexRay represents a volume that will be mounted to the host."
+     },
      "accessModes": {
       "type": "array",
       "items": {
@@ -16226,6 +16230,30 @@
      }
     }
    },
+   "v1.RexRayVolumeSource": {
+    "id": "v1.RexRayVolumeSource",
+    "description": "Holds the information that may be persisted by kubernetes",
+    "required": [
+     "VolumeName",
+     "VolumeID",
+     "Module",
+     "StorageDriver"
+    ],
+    "properties": {
+     "VolumeName": {
+      "type": "string"
+     },
+     "VolumeID": {
+      "type": "string"
+     },
+     "Module": {
+      "type": "string"
+     },
+     "StorageDriver": {
+      "type": "string"
+     }
+    }
+   },
    "v1.PersistentVolumeStatus": {
     "id": "v1.PersistentVolumeStatus",
     "description": "PersistentVolumeStatus is the current status of a persistent volume.",
@@ -16464,6 +16492,10 @@
      "configMap": {
       "$ref": "v1.ConfigMapVolumeSource",
       "description": "ConfigMap represents a configMap that should populate this volume"
+     },
+     "rexray": {
+      "$ref": "v1.RexRayVolumeSource",
+      "description": "RexRay represents a rexray volume that should populate this volume"
      }
     }
    },

@@ -263,6 +263,8 @@ type VolumeSource struct {
 	AzureFile *AzureFileVolumeSource `json:"azureFile,omitempty"`
 	// ConfigMap represents a configMap that should populate this volume
 	ConfigMap *ConfigMapVolumeSource `json:"configMap,omitempty"`
+	// RexRay represents a rexray volume that should populate this volume
+	RexRay *RexRayVolumeSource `json:"rexray,omitempty"`
 }
 
 // PersistentVolumeClaimVolumeSource references the user's PVC in the same namespace.
@@ -323,6 +325,8 @@ type PersistentVolumeSource struct {
 	FlexVolume *FlexVolumeSource `json:"flexVolume,omitempty"`
 	// AzureFile represents an Azure File Service mount on the host and bind mount to the pod.
 	AzureFile *AzureFileVolumeSource `json:"azureFile,omitempty"`
+	// RexRay represents a volume that will be mounted to the host.
+	RexRay *RexRayVolumeSource `json:"rexray,omitempty"`
 }
 
 // +genclient=true,nonNamespaced=true
@@ -824,6 +828,14 @@ type ConfigMapVolumeSource struct {
 	// the volume setup will error. Paths must be relative and may not contain
 	// the '..' path or start with '..'.
 	Items []KeyToPath `json:"items,omitempty"`
+}
+
+// Holds the information that may be persisted by kubernetes
+type RexRayVolumeSource struct {
+	VolumeName    string `json:",volumename"`
+	VolumeID      string `json:",volumeid"`
+	Module        string `json:",module"`
+	StorageDriver string `json:",storagedriver"`
 }
 
 // Maps a string key to a path within a volume.

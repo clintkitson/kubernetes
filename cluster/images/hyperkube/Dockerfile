@@ -32,6 +32,12 @@ RUN cp /usr/bin/nsenter /nsenter
 COPY hyperkube /hyperkube
 RUN chmod a+rx /hyperkube
 
+COPY kubectl /kubectl
+RUN chmod a+rx /kubectl
+
+COPY kubelet-runner.sh /kubelet-runner.sh
+RUN chmod a+rx /kubelet-runner.sh
+
 COPY master-multi.json /etc/kubernetes/manifests-multi/master.json
 COPY kube-proxy.json /etc/kubernetes/manifests-multi/kube-proxy.json
 
@@ -47,3 +53,7 @@ RUN chmod a+rx /setup-files.sh
 
 COPY make-ca-cert.sh /make-ca-cert.sh
 RUN chmod a+x /make-ca-cert.sh
+
+COPY podvol.yml /podvol.yml
+COPY myclaim.yml /myclaim.yml
+COPY podclaim.yml /podclaim.yml

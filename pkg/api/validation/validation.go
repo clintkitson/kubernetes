@@ -525,10 +525,18 @@ func validateVolumeSource(source *api.VolumeSource, fldPath *field.Path) field.E
 		numVolumes++
 		allErrs = append(allErrs, validateAzureFile(source.AzureFile, fldPath.Child("azureFile"))...)
 	}
+	if source.RexRay != nil {
+		if numVolumes > 0 {
+			allErrs = append(allErrs, field.Forbidden(fldPath.Child("rexray"), "may not specify more than 1 volume type"))
+		} else {
+			numVolumes++
+			allErrs = append(allErrs, validateRexRayVolumeSource(source.RexRay, fldPath.Child("rexray"))...)
+		}
+	}
+
 	if numVolumes == 0 {
 		allErrs = append(allErrs, field.Required(fldPath, "must specify a volume type"))
 	}
-
 	return allErrs
 }
 
@@ -673,6 +681,14 @@ func validateDownwardAPIVolumeSource(downwardAPIVolume *api.DownwardAPIVolumeSou
 		}
 		allErrs = append(allErrs, validateVolumeSourcePath(downwardAPIVolumeFile.Path, fldPath.Child("path"))...)
 		allErrs = append(allErrs, validateObjectFieldSelector(&downwardAPIVolumeFile.FieldRef, &validDownwardAPIFieldPathExpressions, fldPath.Child("fieldRef"))...)
+	}
+	return allErrs
+}
+
+func validateRexRayVolumeSource(vs *api.RexRayVolumeSource, fldPath *field.Path) field.ErrorList {
+	allErrs := field.ErrorList{}
+	if len(vs.VolumeName) == 0 {
+		allErrs = append(allErrs, field.Required(fldPath.Child("VolumeName"), ""))
 	}
 	return allErrs
 }
@@ -873,6 +889,14 @@ func ValidatePersistentVolume(pv *api.PersistentVolume) field.ErrorList {
 	if pv.Spec.AzureFile != nil {
 		numVolumes++
 		allErrs = append(allErrs, validateAzureFile(pv.Spec.AzureFile, specPath.Child("azureFile"))...)
+	}
+	if pv.Spec.RexRay != nil {
+		if numVolumes > 0 {
+			allErrs = append(allErrs, field.Forbidden(specPath.Child("rexray"), "may not specify more than 1 volume type"))
+		} else {
+			numVolumes++
+			allErrs = append(allErrs, validateRexRayVolumeSource(pv.Spec.RexRay, specPath.Child("rexray"))...)
+		}
 	}
 	if numVolumes == 0 {
 		allErrs = append(allErrs, field.Required(specPath, "must specify a volume type"))
